@@ -9,7 +9,7 @@ class CustomEnv {
     _file = file;
     return CustomEnv._();
   }
-
+  
   static Future<T> get<T>({required String key}) async {
     if (_map.isEmpty) await _load();
     return _map[key]!.toType(T);

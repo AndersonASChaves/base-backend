@@ -1,24 +1,24 @@
 import 'database.dart';
-
 import 'package:mysql1/mysql1.dart';
+import 'package:commons_core/commons_core.dart';
 
 class DatabaseMySqlAdpter implements Database{
   @override
-  // TODO: implement getConnection
-  Future<MySqlConnection> get getConnection => MySqlConnection.connect(
-    ConnectionSettings(
-      host: 'localhost',
-      port: 3306,
-      user: 'root',
-      db: 'delivery',
-      password: 'root',
-      )
-    );
 
-  @override
-  query(String sql, [List? params]) async {
-    var conn = await getConnection;
-    return conn.query(sql, params);
-  }
+    Future<MySqlConnection> get getConnection async => await MySqlConnection.connect(
+       ConnectionSettings(
+          host: await CustomEnv.get<String>(key: 'host'),
+          port: await CustomEnv.get<int>(key: 'port'),
+          user: await CustomEnv.get<String>(key: 'user'),
+          db: await CustomEnv.get<String>(key: 'db'),
+          password: await CustomEnv.get<String>(key: 'password'),
+        ),
+      );  
+ 
+    @override
+   query(String sql, [List? params]) async {
+      var conn = await getConnection;
+      return conn.query(sql, params);
+    }
 
 }
