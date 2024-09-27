@@ -1,4 +1,4 @@
-typedef InstanceCreator<T> = Function();
+typedef InstanceCreator<T> = T Function();
 
 class DependencyInjector{
   DependencyInjector._();
@@ -32,11 +32,11 @@ class _InstanceGenerator<T> {
   _InstanceGenerator(this._instanceCreator, bool isSingleton)
     : _isFirstGet = isSingleton;
 
-T? getInstance() {
-  if (_isFirstGet){
-    _instance = _instanceCreator();
-    _isFirstGet = false;
+  T? getInstance() {
+    if (_isFirstGet){
+      _instance = _instanceCreator();
+      _isFirstGet = false;
+    }
+    return _instance ?? _instanceCreator();
   }
-  return _instance ?? _instanceCreator();
-}
 }
