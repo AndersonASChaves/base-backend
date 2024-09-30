@@ -2,6 +2,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:commons_core/commons_core.dart';
 import 'database/database_mysql_adpter.dart';
+import 'dart:async';
 void main(List<String> arguments) async{
 
   var result = await CustomEnv.get<String>(key: 'chave');
@@ -10,6 +11,8 @@ void main(List<String> arguments) async{
   print(result1);
   print(result);
   //DatabaseMySqlAdpter().gethost() ;
+ 
+  
   print(await DatabaseMySqlAdpter().query('select * from tb_permissoes'));
  
   //await DatabaseMySqlAdpter().query("insert into tb_permissoes(nome, status) values ('ADMIN', 'A')") ;
