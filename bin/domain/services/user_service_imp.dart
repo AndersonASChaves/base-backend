@@ -1,5 +1,5 @@
 import '../models/user.dart';
-import '../ports/inputs//user_service.dart';
+import '../ports/inputs/user_service.dart';
 import '../ports/outputs/user_repository.dart';
 
 class UserServiceImp implements UserService {
@@ -8,8 +8,7 @@ class UserServiceImp implements UserService {
   UserServiceImp(this._userRepository);
 
   @override
-  List<User> getUsers() {
-    // TODO: implement getUsers
+  Future <List<User>> getAllUsers() async {
     return _userRepository.getUsers();
   }
 }
