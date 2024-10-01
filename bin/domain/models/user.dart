@@ -3,7 +3,7 @@ class User{
   final String nome;
   final String sobrenome;
   final DateTime dtNascimento;
-  final bool status;
+  final String status;
   final String documento;
   final String email;
   final String cidade;

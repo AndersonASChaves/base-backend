@@ -10,6 +10,11 @@ import 'domain/ports/inputs/user_service.dart';
 import 'domain/services/user_service_imp.dart';
 import 'domain/ports/outputs/user_repository.dart';
 import 'infrastructure/database/user_repository_imp.dart';
+
+
+import 'core/database/mapper.dart';
+import 'infrastructure/mappers/user_mapper.dart';
+
 void main(List<String> arguments) async{
 
   //var result = await CustomEnv.get<String>(key: 'chave');
@@ -30,10 +35,12 @@ void main(List<String> arguments) async{
   //    8080,
   //  ); 
 
-  final Database _database = DatabaseMySqlAdpter();
-  final UserRepository _userRepository = UserRepositoryImp(_database);
-  final UserService _userService = UserServiceImp(_userRepository);
-  final Usercontroller _userController = Usercontroller(_userService);
+  final Mapper _userMapper = UserMapper();
+  final Database database = DatabaseMySqlAdpter();
+  final UserRepository userRepository = 
+        UserRepositoryImp(database, _userMapper);
+  final UserService userService = UserServiceImp(userRepository);
+  final Usercontroller userController = Usercontroller(userService);
 
-  _userController.getUsers();
+  userController.getUsers();
 }

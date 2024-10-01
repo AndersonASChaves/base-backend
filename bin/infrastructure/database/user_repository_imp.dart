@@ -1,11 +1,14 @@
 import '../../domain/models/user.dart';
 import '../../domain/ports/outputs/user_repository.dart';
 import '../../core/database/database.dart';
+import '../../core/database/mapper.dart';
+
 
 class UserRepositoryImp implements UserRepository {
 
+  final Mapper _mapper;
   final Database _database;
-  UserRepositoryImp(this._database);
+  UserRepositoryImp(this._database, this._mapper);
 
   @override
   User getUserByEmail(String email) {
@@ -34,7 +37,11 @@ class UserRepositoryImp implements UserRepository {
               FROM tb_usuarios;
 ''';
    var result = await _database.query(_query);
-   return [];
+   
+   List<User> users =    
+          result.map((row) => _mapper.toDomain(row.fields)).toList().cast<User>(); 
+              
+   return users;
   }
 
   @override
