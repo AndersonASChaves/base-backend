@@ -1,5 +1,5 @@
 import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart';
+import 'package:shelf/shelf_io.dart' as shelf_io ;
 import 'package:commons_core/commons_core.dart';
 import 'dart:async';
 
@@ -14,6 +14,8 @@ import 'infrastructure/database/user_repository_imp.dart';
 
 import 'core/database/mapper.dart';
 import 'infrastructure/mappers/user_mapper.dart';
+
+
 
 void main(List<String> arguments) async{
 
@@ -36,11 +38,22 @@ void main(List<String> arguments) async{
   //  ); 
 
   final Mapper _userMapper = UserMapper();
-  final Database database = DatabaseMySqlAdpter();
-  final UserRepository userRepository = 
-        UserRepositoryImp(database, _userMapper);
-  final UserService userService = UserServiceImp(userRepository);
-  final Usercontroller userController = Usercontroller(userService);
+  final Database _database = DatabaseMySqlAdpter();
+  final UserRepository _userRepository = 
+        UserRepositoryImp(_database, _userMapper);
+  final UserService _userService = UserServiceImp(_userRepository);
+  final Usercontroller _userController = Usercontroller(_userService);
 
-  userController.getUsers();
+  var cascadeHandler = Cascade().add(_userController.getHandler()).handler;
+  //pipeline de execução
+  var handler = Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
+
+  
+
+  shelf_io.serve(
+    handler, 
+    (await CustomEnv.get<String>(key: 'server_ip')).replaceAll('\r', ''),
+    await CustomEnv.get<int>(key: 'server_port'),
+    
+    );
 }
