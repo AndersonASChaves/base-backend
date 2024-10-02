@@ -24,7 +24,7 @@ class UserRepositoryImp implements UserRepository {
 
   @override
   Future<List<User>> getUsers() async {
-    final String query = '''
+    final String _sql = '''
               SELECT
                 id,
                   nome,
@@ -36,7 +36,7 @@ class UserRepositoryImp implements UserRepository {
                   status
               FROM tb_usuarios;
 ''';
-   var result = await _database.query(query);
+   var result = await _database.query(_sql);
    
    List<User> users =    
           result.map((row) => _mapper.toDomain(row.fields)).toList().cast<User>(); 
@@ -45,8 +45,27 @@ class UserRepositoryImp implements UserRepository {
   }
 
   @override
-  bool saveUser(User user) {
-    // TODO: implement saveUser
-    throw UnimplementedError();
+  Future<bool> saveUser(User user) async {
+    final String _sql = '''
+      INSERT INTO tb_usuarios
+        (nome,sobrenome,dataNasc,documento,email,senha,deviceToken,cidade,status)
+      VALUES
+        (?,?,?,?,?,?,?,?,?);
+    ''';
+    var result = await _database.query(_sql, [
+      user.nome,
+      user.sobrenome,
+      user.dtNascimento,
+      user.documento,
+      user.email,
+      'senha',
+      'deviceToken',
+      user.cidade,
+      user.status,
+    ]);
+
+
+
+    return result.affectedRows > 0;
   }
 }

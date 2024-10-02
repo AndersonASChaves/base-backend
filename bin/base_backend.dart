@@ -15,7 +15,7 @@ import 'infrastructure/database/user_repository_imp.dart';
 import 'core/database/mapper.dart';
 import 'infrastructure/mappers/user_mapper.dart';
 
-
+import 'domain/models/user.dart';
 
 void main(List<String> arguments) async{
 
@@ -37,14 +37,16 @@ void main(List<String> arguments) async{
   //    8080,
   //  ); 
 
-  final Mapper userMapper = UserMapper();
-  final Database database = DatabaseMySqlAdpter();
-  final UserRepository userRepository = 
-        UserRepositoryImp(database, userMapper);
-  final UserService userService = UserServiceImp(userRepository);
-  final Usercontroller userController = Usercontroller(userService);
+  final Mapper _userMapper = UserMapper();
+  final Database _database = DatabaseMySqlAdpter();
+  final UserRepository _userRepository = 
+        UserRepositoryImp(_database, _userMapper);
+  final UserService _userService = UserServiceImp(_userRepository);
+  final Usercontroller _userController = Usercontroller(_userService);
 
-  var cascadeHandler = Cascade().add(userController.getHandler()).handler;
+  _userService.saveUser(User(id: 1, nome: 'Fulano', sobrenome: 'Ciclano', dtNascimento: DateTime.utc(1944, 6, 6), status: 'A', documento: '5456', email: 'fulano@ciclano.com', cidade: 'Curitiba',));
+
+  var cascadeHandler = Cascade().add(_userController.getHandler()).handler;
   //pipeline de execução
   var handler = Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
 
