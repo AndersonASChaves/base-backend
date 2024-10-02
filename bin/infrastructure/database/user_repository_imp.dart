@@ -24,7 +24,7 @@ class UserRepositoryImp implements UserRepository {
 
   @override
   Future<List<User>> getUsers() async {
-    final String _query = '''
+    final String query = '''
               SELECT
                 id,
                   nome,
@@ -36,7 +36,7 @@ class UserRepositoryImp implements UserRepository {
                   status
               FROM tb_usuarios;
 ''';
-   var result = await _database.query(_query);
+   var result = await _database.query(query);
    
    List<User> users =    
           result.map((row) => _mapper.toDomain(row.fields)).toList().cast<User>(); 

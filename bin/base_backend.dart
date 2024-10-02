@@ -37,14 +37,14 @@ void main(List<String> arguments) async{
   //    8080,
   //  ); 
 
-  final Mapper _userMapper = UserMapper();
-  final Database _database = DatabaseMySqlAdpter();
-  final UserRepository _userRepository = 
-        UserRepositoryImp(_database, _userMapper);
-  final UserService _userService = UserServiceImp(_userRepository);
-  final Usercontroller _userController = Usercontroller(_userService);
+  final Mapper userMapper = UserMapper();
+  final Database database = DatabaseMySqlAdpter();
+  final UserRepository userRepository = 
+        UserRepositoryImp(database, userMapper);
+  final UserService userService = UserServiceImp(userRepository);
+  final Usercontroller userController = Usercontroller(userService);
 
-  var cascadeHandler = Cascade().add(_userController.getHandler()).handler;
+  var cascadeHandler = Cascade().add(userController.getHandler()).handler;
   //pipeline de execução
   var handler = Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
 
