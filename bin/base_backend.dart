@@ -14,8 +14,7 @@ import 'infrastructure/database/user_repository_imp.dart';
 
 import 'core/database/mapper.dart';
 import 'infrastructure/mappers/user_mapper.dart';
-
-import 'domain/models/user.dart';
+import 'application/dtos/user_dto.dart';
 
 void main(List<String> arguments) async{
 
@@ -44,7 +43,18 @@ void main(List<String> arguments) async{
   final UserService _userService = UserServiceImp(_userRepository);
   final Usercontroller _userController = Usercontroller(_userService);
 
-  _userService.saveUser(User(id: 1, nome: 'Fulano', sobrenome: 'Ciclano', dtNascimento: DateTime.utc(1944, 6, 6), status: 'A', documento: '5456', email: 'fulano@ciclano.com', cidade: 'Curitiba',));
+  _userService
+  .saveUser(UserDto(
+     'Teste F',
+     'Ciclano',
+     DateTime.utc(1944, 6, 6),
+     'A',
+     'documento123',
+     'teste@ciclano.com',
+     'Curitiba',
+     'password123',
+     'token45245',     
+     ));
 
   var cascadeHandler = Cascade().add(_userController.getHandler()).handler;
   //pipeline de execução

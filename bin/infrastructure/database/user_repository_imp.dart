@@ -2,7 +2,7 @@ import '../../domain/models/user.dart';
 import '../../domain/ports/outputs/user_repository.dart';
 import '../../core/database/database.dart';
 import '../../core/database/mapper.dart';
-
+import '../../application/dtos/user_dto.dart';
 
 class UserRepositoryImp implements UserRepository {
 
@@ -46,6 +46,7 @@ class UserRepositoryImp implements UserRepository {
 
   @override
   Future<bool> saveUser(User user) async {
+    user as UserDto; //senha e deviceToken casting necessário
     final String _sql = '''
       INSERT INTO tb_usuarios
         (nome,sobrenome,dataNasc,documento,email,senha,deviceToken,cidade,status)
@@ -58,8 +59,8 @@ class UserRepositoryImp implements UserRepository {
       user.dtNascimento,
       user.documento,
       user.email,
-      'senha',
-      'deviceToken',
+      user.password,// 'senha',
+      user.deviceToken, // 'deviceToken',
       user.cidade,
       user.status,
     ]);
