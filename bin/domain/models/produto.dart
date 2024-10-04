@@ -17,7 +17,7 @@ final int? id;
     this.status,
     this.estabelecimento,
     this.categoria,
-    [this.id]
+    [this.id,]
     );
 
 }

@@ -23,7 +23,7 @@ class Estabelecimento{
     this.latitude,
     this.longitude,
     this.endereco,
-    this.enderecoNumero,
+    this.enderecoNumero, 
     this.enderecoOpcional,
     this.status,
     this.proprietario);

@@ -5,7 +5,7 @@ import '../../domain/models/user.dart';
 class EstabelecimentoMapper implements Mapper<Estabelecimento> {
   @override
   Estabelecimento toDomain(Map map) => Estabelecimento( 
-      map['nome'],
+      map['nomeEstabelecimento'],
       map['cnpj'],
       map['telefone'],
       map['descricao'],

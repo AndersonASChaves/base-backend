@@ -8,10 +8,10 @@ import '../../domain/ports/inputs/user_service.dart';
 import '../dtos/user_dto.dart';
 import '../../domain/models/user.dart';
 
-class Usercontroller extends Controller {
+class UserController extends Controller {
 
   final UserService _userService;
-  Usercontroller(this._userService);
+  UserController(this._userService);
 @override
   Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false}) {
     final Router router = Router();

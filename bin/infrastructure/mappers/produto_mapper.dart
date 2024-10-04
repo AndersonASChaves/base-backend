@@ -10,7 +10,7 @@ class ProdutoMapper implements Mapper<Produto>{
     map['produtoNome'],
     map['produtoDescricao'],
     map['produtoValor'],
-    map['produtostatus'],
+    map['produtoStatus'],
     Estabelecimento(
           map[' estabelecimentoNome'],
           map[' estabelecimentoCnpj'],
@@ -33,10 +33,10 @@ class ProdutoMapper implements Mapper<Produto>{
             map['usuarioCidade'],
             ),
           ),
-          Categoria(
-            map['categoriaNome'],
-            map['categoriaDescricao'],
-          )
+    Categoria(
+      map['categoriaNome'],
+      map['categoriaDescricao'],
+      ),
     );
   }
 
