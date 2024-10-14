@@ -21,6 +21,7 @@ import 'application/web/user_controller.dart';
 import 'application/web/estabelecimento_controller.dart';
 import 'application/web/categoria_controller.dart';
 import 'application/web/produto_controller.dart';
+import 'application/web/venda_controller.dart';
 import 'core/injections.dart';
 
 void main(List<String> arguments) async{
@@ -31,6 +32,7 @@ void main(List<String> arguments) async{
     .add(i<EstabelecimentoController>().getHandler())
     .add(i<CategoriaController>().getHandler())
     .add(i<produtoController>().getHandler())
+    .add(i<VendaController>().getHandler())
     .handler;
 
   //pipeline de execução

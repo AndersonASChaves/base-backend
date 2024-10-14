@@ -7,7 +7,7 @@ class ProdutoDto extends Produto{
     super.valor,
     super.status,
     super.estabelecimento,
-    super.categoria
+    super.categoria,
     );
 
     static Map toMap(Produto produto) => {
