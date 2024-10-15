@@ -1,6 +1,6 @@
 //DTO data transfer object
-
 import '../../domain/models/user.dart';
+import 'package:password_dart/password_dart.dart';
 
 class UserDto extends User{
 
@@ -30,5 +30,18 @@ class UserDto extends User{
     'nomeCompleto' : "${user.nome} ${user.sobrenome}",
     'dtNascimento' : user.dtNascimento.toIso8601String()
   };
+
+  static UserDto fromRequest(Map map) => UserDto (
+    map['nome'],
+    map['sobrenome'],
+    DateTime.parse(map['dtNascimento']),
+    map['status'],
+    map['documento'],
+    map['email'],
+    map['cidade'],
+    Password.hash(map['password'],PBKDF2()),
+    map['deviceToken'],
+
+  );
 
 }

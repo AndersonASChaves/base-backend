@@ -10,13 +10,14 @@ import 'domain/ports/inputs/user_service.dart';
 import 'domain/services/user_service_imp.dart';
 import 'domain/ports/outputs/user_repository.dart';
 import 'infrastructure/database/user_repository_imp.dart';
+import 'infrastructure/database/Login_repository_imp.dart';
 
 
 import 'core/database/mapper.dart';
 import 'infrastructure/mappers/user_mapper.dart';
 import 'application/dtos/user_dto.dart';
 
-
+import 'application/web/login_controller.dart';
 import 'application/web/user_controller.dart';
 import 'application/web/estabelecimento_controller.dart';
 import 'application/web/categoria_controller.dart';
@@ -24,15 +25,21 @@ import 'application/web/produto_controller.dart';
 import 'application/web/venda_controller.dart';
 import 'core/injections.dart';
 
+import 'package:password_dart/password_dart.dart';
+
 void main(List<String> arguments) async{
   final i = Injections.init();
+  
+  //var result = Password.hash('123456', PBKDF2());
+  //print (result);
 
   var cascadeHandler = Cascade()
-    .add(i<UserController>().getHandler())
-    .add(i<EstabelecimentoController>().getHandler())
-    .add(i<CategoriaController>().getHandler())
-    .add(i<produtoController>().getHandler())
-    .add(i<VendaController>().getHandler())
+    .add(i<LoginController>().getHandler()) //Unica API que não tem proteção qualquer pessoa pode chamar
+    .add(i<UserController>().getHandler(isSecurity:true))
+    .add(i<EstabelecimentoController>().getHandler(isSecurity:true))
+    .add(i<CategoriaController>().getHandler(isSecurity:true))
+    .add(i<produtoController>().getHandler(isSecurity:true))
+    .add(i<VendaController>().getHandler(isSecurity:true))
     .handler;
 
   //pipeline de execução
